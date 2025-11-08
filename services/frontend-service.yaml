@@ -7,6 +7,7 @@ spec:
   type: LoadBalancer
   selector:
     app: frontend
+    version: blue
   ports:
     - port: 8080
       targetPort: 8080

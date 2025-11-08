@@ -8,6 +8,11 @@ spec:
   selector:
     matchLabels:
       app: log-message-processor
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:
@@ -19,8 +24,17 @@ spec:
           imagePullPolicy: Never
           env:
             - name: REDIS_HOST
-              value: "redis-service"
+              valueFrom:
+                configMapKeyRef:
+                  name: microservice-config
+                  key: REDIS_HOST
             - name: REDIS_PORT
-              value: "6379"
+              valueFrom:
+                configMapKeyRef:
+                  name: microservice-config
+                  key: REDIS_PORT
             - name: REDIS_CHANNEL
-              value: "log_channel"
+              valueFrom:
+                configMapKeyRef:
+                  name: microservice-config
+                  key: REDIS_CHANNEL

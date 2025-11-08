@@ -8,6 +8,11 @@ spec:
   selector:
     matchLabels:
       app: users-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:
@@ -19,8 +24,21 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8083
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "200m"   
+            limits:
+              memory: "256Mi" 
+              cpu: "400m"
           env:
             - name: SERVER_PORT
-              value: "8083"
+              valueFrom:
+                configMapKeyRef:
+                  name: microservice-config
+                  key: SERVER_PORT
             - name: JWT_SECRET
-              value: "PRFT"
+              valueFrom:
+                secretKeyRef:
+                  name: microservice-secrets
+                  key: JWT_SECRET

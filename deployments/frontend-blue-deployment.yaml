@@ -1,13 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-api
+  name: frontend-blue
   namespace: microservice-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-api
+      app: frontend
+      version: blue
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -16,35 +17,30 @@ spec:
   template:
     metadata:
       labels:
-        app: auth-api
+        app: frontend
+        version: blue
     spec:
       containers:
-        - name: auth-api
-          image: auth-api:1.0
+        - name: frontend
+          image: frontend:1.0
           imagePullPolicy: Never
           ports:
-            - containerPort: 8000
+            - containerPort: 80
           resources:
             requests:
               memory: "128Mi"
               cpu: "100m"
             limits:
               memory: "256Mi"
-              cpu: "400m"
+              cpu: "500m"
           env:
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: microservice-secrets
-                  key: JWT_SECRET
-            - name: AUTH_API_PORT
+            - name: AUTH_API_ADDRESS
               valueFrom:
                 configMapKeyRef:
                   name: microservice-config
-                  key: AUTH_API_PORT
-            - name: USERS_API_ADDRESS
+                  key: AUTH_API_ADDRESS
+            - name: TODOS_API_ADDRESS
               valueFrom:
                 configMapKeyRef:
                   name: microservice-config
-                  key: USERS_API_ADDRESS
-              
+                  key: TODOS_API_ADDRESS

@@ -1,0 +1,3 @@
+deployments/secrets.yaml
+
+!deployments/secrets-example.yaml
