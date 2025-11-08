@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: microservice-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: frontend:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          env:
+            - name: AUTH_API_ADDRESS
+              value: "http://auth-api-service:8000"
+            - name: TODOS_API_ADDRESS
+              value: "http://todos-api-service:8082"
