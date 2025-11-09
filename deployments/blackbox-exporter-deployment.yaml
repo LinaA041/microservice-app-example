@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blackbox-exporter
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blackbox-exporter
+  template:
+    metadata:
+      labels:
+        app: blackbox-exporter
+    spec:
+      containers:
+        - name: blackbox-exporter
+          image: prom/blackbox-exporter:latest
+          ports:
+            - containerPort: 9115
+          args:
+            - "--config.file=/etc/blackbox_exporter/config.yml"
+          volumeMounts:
+            - name: config
+              mountPath: /etc/blackbox_exporter
+      volumes:
+        - name: config
+          configMap:
+            name: blackbox-exporter-config

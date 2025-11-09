@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: users-api
   minReplicas: 1
-  maxReplicas: 6
+  maxReplicas: 4
   metrics:
   - type: Resource
     resource:

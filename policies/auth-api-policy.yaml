@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auth-api-policy
+  namespace: microservice-app
+spec:
+  podSelector:
+    matchLabels:
+      app: auth-api
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: users-api
+      ports:
+        - port: 8083
+          protocol: TCP

@@ -13,3 +13,5 @@ data:
   TODOS_API_PORT: "8082"
   SERVER_PORT: "8083"
   AUTH_API_PORT: "8000"
+  REDIS_ADDR: "redis-service.microservice-app.svc.cluster.local:6379"
+  

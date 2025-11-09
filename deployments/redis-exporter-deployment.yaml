@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-exporter
+  namespace: microservice-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-exporter
+  template:
+    metadata:
+      labels:
+        app: redis-exporter
+    spec:
+      containers:
+      - name: redis-exporter
+        image: oliver006/redis_exporter:latest
+        env:
+          - name: REDIS_ADDR
+            valueFrom:
+              configMapKeyRef:
+                name: microservice-config
+                key: REDIS_ADDR
+        ports:
+          - containerPort: 9121

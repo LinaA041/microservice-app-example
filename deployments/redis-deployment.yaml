@@ -18,3 +18,4 @@ spec:
           image: redis:7.0-alpine
           ports:
             - containerPort: 6379
+            - containerPort: 9100
