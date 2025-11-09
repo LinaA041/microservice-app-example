@@ -26,3 +26,16 @@ spec:
       ports:
         - port: 6379
           protocol: TCP
+    - to:
+        - podSelector:
+            matchLabels:
+              app: log-message-processor
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

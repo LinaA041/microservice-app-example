@@ -8,8 +8,12 @@ spec:
     matchLabels:
       app: log-message-processor
   policyTypes:
+    - Ingress
     - Egress
+  ingress:
+    - {}  
   egress:
+
     - to:
         - podSelector:
             matchLabels:
@@ -17,3 +21,12 @@ spec:
       ports:
         - port: 6379
           protocol: TCP
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

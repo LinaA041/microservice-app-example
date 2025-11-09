@@ -14,9 +14,36 @@ spec:
         - podSelector:
             matchLabels:
               app: todos-api
+      ports:
+        - port: 6379
+          protocol: TCP
+    - from:
         - podSelector:
             matchLabels:
               app: log-message-processor
+      ports:
+        - port: 6379
+          protocol: TCP
+    - from:
+        - podSelector:
+            matchLabels:
+              app: auth-api
+      ports:
+        - port: 6379
+          protocol: TCP
+
+    - from:
+        - podSelector:
+            matchLabels:
+              app: users-api
+      ports:
+        - port: 6379
+          protocol: TCP
+
+    - from:
+        - podSelector:
+            matchLabels:
+              app: redis-exporter
       ports:
         - port: 6379
           protocol: TCP
