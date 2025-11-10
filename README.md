@@ -15,3 +15,44 @@ In each folder you can find a more in-depth explanation of each component:
 
 Take a look at the components diagram that describes them and their interactions.
 ![microservice-app-example](/arch-img/Microservices.png)
+
+## Workshop development
+
+This project implements a complete microservices architecture in Kubernetes using Minikube as the local environment.
+It includes:
+
+* Containerization of each service.
+* Deployment of multiple microservices.
+* Config maps and secrets.
+* Autoscaling with HPA.
+* Blue/Green Deployment.
+* Observability with Prometheus and Grafana.
+* Security through Network Policies with Calico.
+
+The main objective was to build a functional, secure, and scalable environment that reproduces best practices in modern architecture on Kubernetes.
+
+### Image building: Dockerfiles
+
+The original project did not include ready-to-use images, so the first step was to create all the Dockerfiles to ensure environment independence and a reproducible build.
+
+Services included:
+
+| Service	  | Technology |	Base image used	   | Port   |
+|----------   |:----------:|:---------------------:| ------:|
+| frontend	  | Node	   | node:8.17.0	       | 8080   |
+| auth-api	  | Go	       | golang:1.18	       | 8000   |
+| users-api	  | Java 	   | maven:3.9.6-eclipse...| 8083   |
+| todos-api	  | Node	   | node:8.17.0	       | 8082   |
+| log-message |	Python	   | python:3.10-slim      |— (jobs)|
+| redis	      | Redis	   | redis:7               | 6379   |
+
+Each image was compiled with:
+
+```bash 
+docker build -t <service>:1.0 .
+minikube image load <service>:1.0
+```
+This is to ensure that minikube has local access to the images without having to upload and download them to DockerHub.
+
+### Deployment of microservices: 
+
