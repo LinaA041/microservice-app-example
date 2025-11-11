@@ -295,6 +295,11 @@ minikube start --network-plugin=cni --cni=calico
 | **log-message-processor-policy**  | Authorize access to Redis only                              |
 
 
+Finally, the status of all pods is validated and, as you can see, they are all active: 
+
+<img width="1101" height="907" alt="image" src="https://github.com/user-attachments/assets/fd703d76-eed3-42fd-ba28-4317f4592f48" />
+
+Similarly, the frontend is accessed to validate that everything is operational:
 
 <img width="1919" height="723" alt="image" src="https://github.com/user-attachments/assets/9de349e8-5507-4bf5-a41d-664d87153760" />
 
